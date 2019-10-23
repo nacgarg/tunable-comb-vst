@@ -9,6 +9,7 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <vector>
 
 #pragma once
 
@@ -23,11 +24,7 @@ class DelayLine {
 
   void setDelayTime(float delaySec, double sampleRate) {
     int delayInSamples = delaySec * sampleRate;
-    if (delayInSamples >= data.size()) {
-      data.resize(2 * delayInSamples);
-      lastIndex = 0;
-    }
-    jassert(delayInSamples >= 0 && delayInSamples < data.size());
+	setDelaySamples(delayInSamples);
   }
 
   void setDelaySamples(unsigned int delaySamples) {

@@ -58,7 +58,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     float delaySec = 0.015f;
-    double sampleRate = 0;
+    double sampleRate = 44100;
+	String debugText;
 
 private:
     //==============================================================================

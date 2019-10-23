@@ -33,6 +33,10 @@ void MidiCombFilterAudioProcessorEditor::paint (Graphics& g)
     g.setColour (Colours::white);
     g.setFont (15.0f);
     g.drawFittedText ("Hello World!", getLocalBounds(), Justification::centred, 1);
+	g.drawFittedText(String(processor.delaySec), getLocalBounds().removeFromTop(100), Justification::centred, 1);
+	g.drawFittedText(processor.debugText, getLocalBounds().removeFromTop(200), Justification::centred, 1);
+
+
 }
 
 void MidiCombFilterAudioProcessorEditor::resized()

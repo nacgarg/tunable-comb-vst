@@ -143,8 +143,7 @@ void MidiCombFilterAudioProcessor::processBlock(AudioBuffer<float>& buffer,
   // Alternatively, you can process the samples with the channels
   // interleaved by keeping the same state.
 
-  debugText = String(sampleRate) + "hz, " + String(delaySec * sampleRate) + " samples";
-
+  debugText = String(sampleRate) + "hz, " + String(delaySec * sampleRate) + " samples, " + String(feedback*100) + "% feedback";
   for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
     int numSamples = buffer.getNumSamples();
     auto* channelData = buffer.getWritePointer(channel);
@@ -152,8 +151,8 @@ void MidiCombFilterAudioProcessor::processBlock(AudioBuffer<float>& buffer,
 	delays[channel].setDelaySamples(delaySec * sampleRate);
     for (int i = 0; i < numSamples; i++) {
         //delays[channel].setDelaySamples((unsigned int)(std::sin(0.00002f * lfos[channel]++)*700)+1200);
-      auto delayedSample = delays[channel].getSample();
-      auto outputSample = std::tanh(channelData[i] - 0.9 * delayedSample);
+      float delayedSample = delays[channel].getSample();
+      float outputSample = (2.0f / (std::exp(-1.0f * waveshaperDelta * ((float)channelData[i] - feedback * delayedSample)) + 1.0f)) - 1.0f;
       delays[channel].pushSample(outputSample);
       channelData[i] = outputSample;
     }

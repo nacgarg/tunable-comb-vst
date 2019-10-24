@@ -60,6 +60,8 @@ public:
     float delaySec = 0.015f;
     double sampleRate = 44100;
 	String debugText;
+	double waveshaperDelta = 2.0;
+	float feedback = 0.8f;
 
 private:
     //==============================================================================

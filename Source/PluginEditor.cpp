@@ -18,6 +18,17 @@ MidiCombFilterAudioProcessorEditor::MidiCombFilterAudioProcessorEditor (MidiComb
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+	addAndMakeVisible(feedbackSlider);
+	feedbackSlider.setRange(0.0, 1.2);        
+	feedbackSlider.setTextValueSuffix("%");    
+	feedbackSlider.addListener(this);
+
+	addAndMakeVisible(waveshaperSlider);
+	waveshaperSlider.setRange(0.1, 5.0); 
+	waveshaperSlider.setTextValueSuffix("");   
+	waveshaperSlider.addListener(this);
+
+	setRepaintsOnMouseActivity(true);
 }
 
 MidiCombFilterAudioProcessorEditor::~MidiCombFilterAudioProcessorEditor()
@@ -36,11 +47,24 @@ void MidiCombFilterAudioProcessorEditor::paint (Graphics& g)
 	g.drawFittedText(String(processor.delaySec), getLocalBounds().removeFromTop(100), Justification::centred, 1);
 	g.drawFittedText(processor.debugText, getLocalBounds().removeFromTop(200), Justification::centred, 1);
 
-
 }
 
 void MidiCombFilterAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+	auto sliderLeft = 10;
+	feedbackSlider.setBounds(sliderLeft, 20, getWidth() - sliderLeft - 10, 20);
+	waveshaperSlider.setBounds(sliderLeft, 50, getWidth() - sliderLeft - 10, 20);
+}
+
+void MidiCombFilterAudioProcessorEditor::sliderValueChanged(Slider* slider) 
+{
+	//std::cout << "slider changed\n";
+	if (slider == &waveshaperSlider)
+		processor.waveshaperDelta = waveshaperSlider.getValue();
+	if (slider == &feedbackSlider)
+		processor.feedback = feedbackSlider.getValue();
+	repaint();
+	
 }

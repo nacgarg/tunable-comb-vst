@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class MidiCombFilterAudioProcessorEditor  : public AudioProcessorEditor
+class MidiCombFilterAudioProcessorEditor  : public AudioProcessorEditor, Slider::Listener
 {
 public:
     MidiCombFilterAudioProcessorEditor (MidiCombFilterAudioProcessor&);
@@ -25,11 +25,16 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
+	void sliderValueChanged(Slider* slider) override;
 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MidiCombFilterAudioProcessor& processor;
+	Slider feedbackSlider;
+	Slider waveshaperSlider;
+
+
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiCombFilterAudioProcessorEditor)
 };

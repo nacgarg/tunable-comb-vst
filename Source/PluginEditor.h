@@ -15,26 +15,24 @@
 
 //==============================================================================
 /**
-*/
-class MidiCombFilterAudioProcessorEditor  : public AudioProcessorEditor, Slider::Listener
-{
-public:
-    MidiCombFilterAudioProcessorEditor (MidiCombFilterAudioProcessor&);
-    ~MidiCombFilterAudioProcessorEditor();
+ */
+class MidiCombFilterAudioProcessorEditor : public AudioProcessorEditor, Slider::Listener {
+ public:
+  MidiCombFilterAudioProcessorEditor(MidiCombFilterAudioProcessor&);
+  ~MidiCombFilterAudioProcessorEditor();
 
-    //==============================================================================
-    void paint (Graphics&) override;
-    void resized() override;
-	void sliderValueChanged(Slider* slider) override;
+  //==============================================================================
+  void paint(Graphics&) override;
+  void resized() override;
+  void sliderValueChanged(Slider* slider) override;
 
-private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    MidiCombFilterAudioProcessor& processor;
-	Slider feedbackSlider;
-	Slider waveshaperSlider;
+ private:
+  // This reference is provided as a quick way for your editor to
+  // access the processor object that created it.
+  MidiCombFilterAudioProcessor& processor;
+  Slider feedbackSlider;
+  Slider waveshaperSlider;
+  TextButton combTypeToggle;
 
-
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiCombFilterAudioProcessorEditor)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiCombFilterAudioProcessorEditor)
 };

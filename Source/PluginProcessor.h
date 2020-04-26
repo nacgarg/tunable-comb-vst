@@ -11,61 +11,64 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "DelayLine.h"
-
+#include "RingBuffer.h"
 
 //==============================================================================
 /**
-*/
-class MidiCombFilterAudioProcessor  : public AudioProcessor
-{
-public:
-    //==============================================================================
-    MidiCombFilterAudioProcessor();
-    ~MidiCombFilterAudioProcessor();
+ */
+class MidiCombFilterAudioProcessor : public AudioProcessor {
+ public:
+  //==============================================================================
+  MidiCombFilterAudioProcessor();
+  ~MidiCombFilterAudioProcessor();
 
-    //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
+  //==============================================================================
+  void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+  void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+#ifndef JucePlugin_PreferredChannelConfigurations
+  bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
+#endif
 
-    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
+  void processBlock(AudioBuffer<float>&, MidiBuffer&) override;
 
-    //==============================================================================
-    AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
+  //==============================================================================
+  AudioProcessorEditor* createEditor() override;
+  bool hasEditor() const override;
 
-    //==============================================================================
-    const String getName() const override;
+  //==============================================================================
+  const String getName() const override;
 
-    bool acceptsMidi() const override;
-    bool producesMidi() const override;
-    bool isMidiEffect() const override;
-    double getTailLengthSeconds() const override;
+  bool acceptsMidi() const override;
+  bool producesMidi() const override;
+  bool isMidiEffect() const override;
+  double getTailLengthSeconds() const override;
 
-    //==============================================================================
-    int getNumPrograms() override;
-    int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
+  //==============================================================================
+  int getNumPrograms() override;
+  int getCurrentProgram() override;
+  void setCurrentProgram(int index) override;
+  const String getProgramName(int index) override;
+  void changeProgramName(int index, const String& newName) override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+  //==============================================================================
+  void getStateInformation(MemoryBlock& destData) override;
+  void setStateInformation(const void* data, int sizeInBytes) override;
 
-    float delaySec = 0.015f;
-    double sampleRate = 44100;
-	String debugText;
-	double waveshaperDelta = 2.0;
-	float feedback = 0.8f;
+  float delaySec = 0.015f;
+  double sampleRate = 44100;
+  String debugText;
+  double waveshaperDelta = 2.0;
+  float feedback = 0.8f;
+  int combType = 1; // 1 or -1
 
-private:
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiCombFilterAudioProcessor)
-    std::vector<DelayLine> delays;
-    std::vector<unsigned int> lfos;
+ private:
+  //==============================================================================
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiCombFilterAudioProcessor)
+  std::vector<RingBuffer<50000>> delays;
+  struct MidiInfo {
+    MidiMessage midi;
+    int sampleTime;
+  };
+  std::vector<MidiInfo> onNotes;
 };

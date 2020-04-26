@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="TLg8uK" name="MIDI Comb Filter" projectType="audioplug" jucerVersion="5.4.5"
+<JUCERPROJECT id="TLg8uK" name="MIDI Comb Filter" projectType="audioplug" jucerVersion="5.4.7"
               pluginCharacteristicsValue="pluginWantsMidiIn" cppLanguageStandard="17"
               pluginFormats="buildStandalone,buildVST,buildVST3" projectLineFeed="&#10;">
   <MAINGROUP id="cGCPrn" name="MIDI Comb Filter">
     <GROUP id="{0153F1FB-F9CB-4016-1E8D-8DC33D8FF7EC}" name="Source">
+      <FILE id="ublN8t" name="RingBuffer.h" compile="0" resource="0" file="Source/RingBuffer.h"/>
       <FILE id="HH17D7" name="DelayLine.h" compile="1" resource="0" file="Source/DelayLine.h"/>
       <FILE id="suL9rB" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
